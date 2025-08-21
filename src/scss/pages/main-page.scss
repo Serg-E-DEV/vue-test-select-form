@@ -1,0 +1,11 @@
+.main-page {
+  &__main {
+    padding-bottom: 40px;
+  }
+
+  @media (width >= 650px) {
+    &__main {
+      padding-bottom: 80px;
+    }
+  }
+}

@@ -1,0 +1,44 @@
+@use 'common/typography' as typography;
+@use 'common/variables';
+@use 'base/reset/reset-button';
+@use 'base/base-button';
+@use 'base/sprite-icon';
+@use 'styles/line-clamp-style';
+@use 'styles/styled-text';
+@use 'styles/gradient-text-style';
+@use 'styles/scrollbar-style';
+@use 'styles/select-icon-style';
+@use 'layouts/page';
+@use 'layouts/section';
+@use 'pages/main-page';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-width: var(--layout-min-width);
+  font: var(--font-body);
+  color: var(--color-text);
+
+  &:has([aria-modal='true']) {
+    overflow: hidden;
+    touch-action: none;
+  }
+}
+
+h1 {
+  margin-bottom: 40px;
+  font: var(--font-heading-1);
+}
+
+/*
+ breakpoints:
+   576:
+   768:
+   992:
+   1200:
+   1400:
+*/

@@ -1,0 +1,29 @@
+@font-face {
+  font-family: 'Monument Extended';
+  font-style: normal;
+  font-weight: 400;
+  src:
+    url('@/assets/fonts/MonumentExtended-Regular.woff2') format('woff2'),
+    url('@/assets/fonts/MonumentExtended-Regular.woff') format('woff');
+  font-display: block;
+}
+
+@font-face {
+  font-family: Graphik;
+  font-style: normal;
+  font-weight: 400;
+  src:
+    url('@/assets/fonts/Graphik-Regular.woff2') format('woff2'),
+    url('@/assets/fonts/Graphik-Regular.woff') format('woff');
+  font-display: block;
+}
+
+@font-face {
+  font-family: Graphik;
+  font-style: normal;
+  font-weight: 500;
+  src:
+    url('@/assets/fonts/Graphik-Medium.woff2') format('woff2'),
+    url('@/assets/fonts/Graphik-Medium.woff') format('woff');
+  font-display: block;
+}

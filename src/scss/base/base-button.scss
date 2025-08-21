@@ -1,0 +1,50 @@
+@use '@/scss/common/typography' as typography;
+
+.base-button {
+  @include typography.main-text(14px, 400, 1.1);
+
+  position: relative;
+  flex-shrink: 0;
+  min-height: 72px;
+  padding-inline: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 8px;
+  font-family: var(--font-family-monument), sans-serif;
+  text-transform: uppercase;
+  color: var(--base-button-color, var(--color-text));
+  background: var(--base-button-background, transparent);
+  background-size: 100% auto;
+  border: var(--base-button-border, none);
+  transition: var(--duration-l);
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.5;
+  }
+
+  &_theme {
+    &_white {
+      --base-button-background: var(--color-white);
+    }
+
+    &_blue {
+      color: var(--color-white);
+
+      --base-button-background: radial-gradient(59.86% 345.83% at 94.35% 142.36%, #398bf5 0%, #45b7f4 100%);
+
+      &:hover {
+        background-size: 200% auto;
+      }
+    }
+  }
+
+  @media (width >= 650px) {
+    &_size {
+      &_desktop-middle {
+        min-width: 288px;
+      }
+    }
+  }
+}
