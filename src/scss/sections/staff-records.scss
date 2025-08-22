@@ -1,0 +1,21 @@
+.staff-records {
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    column-gap: 16px;
+  }
+
+  &__title {
+    font: var(--font-heading);
+  }
+
+  &__rows {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+  }
+}

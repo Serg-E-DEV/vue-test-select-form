@@ -1,0 +1,28 @@
+@use '@/scss/common/typography' as typography;
+
+.base-input {
+  @include typography.main-text(16px, 400, 1);
+
+  min-width: 140px;
+  min-height: 32px;
+  padding-inline: 8px;
+  font-family: inherit;
+  color: var(--color-text);
+  background: var(--color-blank);
+  border: var(--base-input-border, 1px solid var(--color-border));
+  border-radius: var(--radius-s);
+
+  &::placeholder {
+    color: var(--color-text-light);
+  }
+
+  &_invalid {
+    --base-input-border: 2px solid var(--color-red);
+
+    &:focus {
+      outline: none;
+
+      --base-input-border: 2px solid var(--color-red);
+    }
+  }
+}

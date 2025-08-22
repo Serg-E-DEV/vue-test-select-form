@@ -3,6 +3,9 @@
 @use 'base/reset/reset-button';
 @use 'base/base-button';
 @use 'base/sprite-icon';
+@use 'base/base-hint';
+@use 'base/base-input';
+@use 'blocks/record-row';
 @use 'styles/line-clamp-style';
 @use 'styles/styled-text';
 @use 'styles/gradient-text-style';
@@ -11,6 +14,7 @@
 @use 'layouts/page';
 @use 'layouts/section';
 @use 'pages/main-page';
+@use 'sections/staff-records';
 
 * {
   box-sizing: border-box;
@@ -27,11 +31,6 @@ body {
     overflow: hidden;
     touch-action: none;
   }
-}
-
-h1 {
-  margin-bottom: 40px;
-  font: var(--font-heading-1);
 }
 
 /*
