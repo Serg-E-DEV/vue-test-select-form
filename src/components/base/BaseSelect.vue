@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import { SelectOption } from '@/interfaces/select-option.interface';
+
 const model = defineModel<string>({ required: true });
 
 const emit = defineEmits(['change']);
-
-type SelectOption = string | { selectValue: string; selectLabel: string };
 
 withDefaults(
   defineProps<{
@@ -23,12 +23,14 @@ withDefaults(
     :disabled="disabled"
     @change="(e) => emit('change', e)"
   >
+    <option disabled value="">Выберите документ</option>
     <option
-      v-for="(selectOption, i) in selectOptions"
-      :key="i"
-      :value="typeof selectOption === 'string' ? selectOption : selectOption.selectValue"
+      v-for="(selectOption, index) in selectOptions"
+      :key="selectOption.selectValue"
+      :value="selectOption.selectValue"
+      :data-active="selectOption.active ?? null"
     >
-      {{ typeof selectOption === 'string' ? selectOption : selectOption.selectLabel }}
+      {{ selectOption.selectLabel }}
     </option>
   </select>
 </template>

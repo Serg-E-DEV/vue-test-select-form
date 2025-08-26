@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import IconButton from '@/components/base/IconButton.vue';
 import BaseInput from '@/components/base/BaseInput.vue';
+import ResetButton from '@/components/base/ResetButton.vue';
 
 import { StaffRecord } from '@/interfaces/staff-record.interface';
 import { RecordForm } from '@/interfaces/record-form.interface';
-import { FormErrors } from '@/interfaces/form-errors.interface';
 
+import { FormErrors } from '@/interfaces/form-errors.interface';
 import { reactive, ref } from 'vue';
 import gsap from 'gsap';
 import { useAppStore } from '@/stores/app.store';
@@ -93,13 +94,18 @@ function updateIfValid() {
     <BaseInput
       v-model="recordForm.fullName"
       class="record-row__input"
-      placeholder="Введите ФИО сотрудника"
+      placeholder="ФИО сотрудника"
       name="login"
       maxlength="100"
       :error="formErrors.fullName"
       :disabled="!isEditing"
       @keydown.enter="updateIfValid"
     />
+    <ResetButton
+      :class="['record-row__btn-docs', { 'record-row__btn-docs_empty': !props.record.staffDocuments.length }]"
+    >
+      Документы: {{ record.staffDocuments.length }}
+    </ResetButton>
     <div class="record-row__controls">
       <IconButton icon="edit" v-if="!isEditing" @click="isEditing = true" />
       <IconButton icon="save" v-if="isEditing" @click="updateIfValid" />

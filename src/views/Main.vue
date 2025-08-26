@@ -3,6 +3,7 @@ import SpriteIcon from '@/components/base/SpriteIcon.vue';
 import BaseButton from '@/components/base/BaseButton.vue';
 import RecordRow from '@/components/RecordRow.vue';
 import { useAppStore } from '@/stores/app.store';
+import RecordDocuments from '@/components/RecordDocuments.vue';
 
 const appStore = useAppStore();
 </script>
@@ -31,12 +32,14 @@ const appStore = useAppStore();
             <span class="record-row__title">Табельный номер</span>
             <span class="record-row__title">ФИО</span>
           </div>
-          <RecordRow
-            v-for="record in appStore.records"
+          <div
+            class="staff-records__row-container"
+            v-for="(record, index) in appStore.records"
             :key="record.id"
-            :record="record"
-            class="staff-records__row"
-          />
+          >
+            <RecordRow :record="record" />
+            <RecordDocuments v-if="index === 2" :record="record" />
+          </div>
         </div>
       </section>
     </main>

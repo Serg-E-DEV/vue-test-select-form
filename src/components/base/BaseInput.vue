@@ -1,7 +1,7 @@
 <script setup lang="ts">
-const model = defineModel<string>({ required: true, default: '' });
+const model = defineModel<string | number | Date>({ required: true, default: '' });
 interface Props {
-  type?: string;
+  type?: 'text' | 'number' | 'date';
   placeholder?: string;
   disabled?: boolean;
   error?: boolean;

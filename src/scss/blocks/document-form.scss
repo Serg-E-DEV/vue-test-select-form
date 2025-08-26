@@ -1,0 +1,21 @@
+.document-form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+
+  &__field {
+    display: grid;
+    align-items: center;
+    column-gap: 8px;
+    grid-template-columns: 150px auto;
+  }
+
+  &__input {
+    transition: padding var(--duration);
+
+    &:disabled {
+      padding-inline: 0;
+      border-color: transparent;
+    }
+  }
+}

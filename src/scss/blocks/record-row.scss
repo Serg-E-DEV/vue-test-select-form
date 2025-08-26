@@ -3,7 +3,7 @@
   display: grid;
   align-items: center;
   column-gap: 16px;
-  grid-template-columns: 32px 160px 1fr auto;
+  grid-template-columns: 32px 160px 1fr auto auto;
   overflow: hidden;
   border: var(--record-row-border, 1px solid var(--color-border-light));
   border-radius: var(--radius);
@@ -24,6 +24,16 @@
     color: var(--color-text-light);
   }
 
+  &__title {
+    &:last-child {
+      grid-column: span 3;
+    }
+  }
+
+  &__id {
+    color: var(--color-text-light);
+  }
+
   &__input {
     transition: padding var(--duration);
 
@@ -34,6 +44,16 @@
       &::placeholder {
         color: transparent;
       }
+    }
+  }
+
+  &__btn-docs {
+    font: var(--font-body-xs);
+    text-decoration: underline dashed;
+    color: var(--color-blue);
+
+    &_empty {
+      color: var(--color-text-light);
     }
   }
 

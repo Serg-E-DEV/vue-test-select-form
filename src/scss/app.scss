@@ -5,7 +5,10 @@
 @use 'base/sprite-icon';
 @use 'base/base-hint';
 @use 'base/base-input';
+@use 'base/base-select';
 @use 'blocks/record-row';
+@use 'blocks/record-documents';
+@use 'blocks/document-form';
 @use 'styles/line-clamp-style';
 @use 'styles/styled-text';
 @use 'styles/gradient-text-style';

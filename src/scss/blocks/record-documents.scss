@@ -1,0 +1,22 @@
+.record-documents {
+  min-height: 500px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius);
+  opacity: 1;
+  transition: var(--duration);
+
+  &__select-panel {
+    display: flex;
+    column-gap: 8px;
+  }
+
+  &__select-controls {
+    display: flex;
+    align-items: center;
+    column-gap: 4px;
+  }
+}
