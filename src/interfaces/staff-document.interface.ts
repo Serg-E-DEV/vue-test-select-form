@@ -1,6 +1,6 @@
-import { DocumentsSchema } from '@/schemas/documents.schema';
+import { documentsSchema } from '@/schemas/documents.schema';
 
-export type StaffDocumentType = keyof typeof DocumentsSchema;
+export type StaffDocumentType = keyof typeof documentsSchema;
 
 export interface StaffDocumentFieldSchema {
   label: string;
@@ -15,11 +15,18 @@ export interface StaffDocumentSchema {
 export interface StaffDocument {
   id: number;
   type: StaffDocumentType;
-  fields: Record<string, string | Date>;
+  fields: Record<string, string>;
   validated: boolean;
 }
 
-export interface staffDocumentsSelectOption {
+export interface StaffDocumentsSelectOption {
   value: StaffDocumentType;
   label: string;
+}
+
+export interface StaffDocumentFormField {
+  key: string;
+  label: string;
+  type: StaffDocumentType;
+  value: string;
 }

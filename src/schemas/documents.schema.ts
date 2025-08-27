@@ -1,10 +1,10 @@
 import {
   StaffDocumentSchema,
-  staffDocumentsSelectOption,
+  StaffDocumentsSelectOption,
   StaffDocumentType,
 } from '@/interfaces/staff-document.interface';
 
-export const DocumentsSchema: Record<string, StaffDocumentSchema> = {
+export const documentsSchema: Record<string, StaffDocumentSchema> = {
   passport: {
     label: 'Паспорт',
     fields: {
@@ -42,8 +42,8 @@ export const DocumentsSchema: Record<string, StaffDocumentSchema> = {
   },
 };
 
-export const staffDocumentsSelectOptions: staffDocumentsSelectOption[] = Object.entries(DocumentsSchema).map(
-  ([key, { label }]): staffDocumentsSelectOption => ({
+export const staffDocumentsSelectOptions: StaffDocumentsSelectOption[] = Object.entries(documentsSchema).map(
+  ([key, { label }]): StaffDocumentsSelectOption => ({
     value: key as StaffDocumentType,
     label: label,
   })

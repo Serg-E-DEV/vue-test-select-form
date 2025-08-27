@@ -4,14 +4,13 @@ import BaseInput from '@/components/base/BaseInput.vue';
 import ResetButton from '@/components/base/ResetButton.vue';
 
 import { StaffRecord } from '@/interfaces/staff-record.interface';
-import { RecordForm } from '@/interfaces/record-form.interface';
+import { RecordForm } from '@/interfaces/forms.interface';
 
-import { FormErrors } from '@/interfaces/form-errors.interface';
+import { RecordFormErrors } from '@/interfaces/errors.interface';
 import { reactive, ref } from 'vue';
 import gsap from 'gsap';
 import { useAppStore } from '@/stores/app.store';
 import { validateRecordForm } from '@/modules/validateForms';
-import { normalizeInput } from '@/modules/normalize';
 
 const props = defineProps<{
   record: StaffRecord;
@@ -26,13 +25,11 @@ const recordRow = ref<HTMLElement>();
 const recordForm = reactive<RecordForm>({
   staffNumber: props.record.staffNumber,
   fullName: props.record.fullName,
-  validated: props.record.validated,
 });
 
-const formErrors = reactive<FormErrors>({
+const recordFormErrors = reactive<RecordFormErrors>({
   staffNumber: false,
   fullName: false,
-  validated: false,
 });
 
 function removeRecord() {
@@ -51,11 +48,12 @@ function removeRecord() {
   });
 }
 
-function updateIfValid() {
-  recordForm.staffNumber = normalizeInput(recordForm.staffNumber);
-  recordForm.fullName = normalizeInput(recordForm.fullName);
+function validateRecord() {
+  validateRecordForm(recordForm, recordFormErrors);
+}
 
-  if (!validateRecordForm(recordForm, formErrors)) {
+function updateRecordIfValid() {
+  if (!validateRecordForm(recordForm, recordFormErrors)) {
     return;
   }
 
@@ -87,9 +85,11 @@ function updateIfValid() {
       placeholder="Табельный номер"
       name="staff-number"
       maxlength="100"
-      :error="formErrors.staffNumber"
+      :error="recordFormErrors.staffNumber"
       :disabled="!isEditing"
-      @keydown.enter="updateIfValid"
+      @keydown.enter="updateRecordIfValid"
+      @input="recordFormErrors.staffNumber = false"
+      @blur="validateRecord"
     />
     <BaseInput
       v-model="recordForm.fullName"
@@ -97,9 +97,11 @@ function updateIfValid() {
       placeholder="ФИО сотрудника"
       name="login"
       maxlength="100"
-      :error="formErrors.fullName"
+      :error="recordFormErrors.fullName"
       :disabled="!isEditing"
-      @keydown.enter="updateIfValid"
+      @keydown.enter="updateRecordIfValid"
+      @input="recordFormErrors.fullName = false"
+      @blur="validateRecord"
     />
     <ResetButton
       :class="['record-row__btn-docs', { 'record-row__btn-docs_empty': !props.record.staffDocuments.length }]"
@@ -108,7 +110,7 @@ function updateIfValid() {
     </ResetButton>
     <div class="record-row__controls">
       <IconButton icon="edit" v-if="!isEditing" @click="isEditing = true" />
-      <IconButton icon="save" v-if="isEditing" @click="updateIfValid" />
+      <IconButton icon="save" v-if="isEditing" @click="updateRecordIfValid" />
       <IconButton icon="trash" @click="removeRecord" />
     </div>
   </div>
