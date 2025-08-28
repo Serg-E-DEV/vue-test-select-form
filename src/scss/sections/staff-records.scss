@@ -13,15 +13,12 @@
     font: var(--font-heading);
   }
 
-  &__rows {
-    display: flex;
-    flex-direction: column;
-    row-gap: 8px;
+  &__row-container:not(:last-child) {
+    margin-bottom: 8px;
+    overflow: hidden;
   }
 
-  &__row-container {
-    display: flex;
-    flex-direction: column;
-    row-gap: 8px;
+  &__row-documents {
+    margin-top: 8px;
   }
 }

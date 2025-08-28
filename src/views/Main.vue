@@ -4,8 +4,95 @@ import BaseButton from '@/components/base/BaseButton.vue';
 import RecordRow from '@/components/RecordRow.vue';
 import { useAppStore } from '@/stores/app.store';
 import RecordDocuments from '@/components/RecordDocuments.vue';
+import { nextTick, ref } from 'vue';
+import gsap from 'gsap';
 
 const appStore = useAppStore();
+
+const openedRecordId = ref<number | null>();
+
+const documentPanels: Record<number, HTMLElement | null> = {};
+const rowContainers: Record<number, HTMLElement | null> = {};
+
+async function toggleDocuments(recordId: number) {
+  const isOpened = openedRecordId.value === recordId;
+  let panel: HTMLElement | null;
+
+  const tl = gsap.timeline();
+
+  if (isOpened) {
+    panel = documentPanels[recordId];
+
+    if (!panel) {
+      return;
+    }
+
+    tl.set(panel, { overflow: 'hidden' });
+    tl.to(panel, { height: 0, opacity: 0, duration: 0.6, ease: 'power1.inOut' });
+    tl.to(
+      panel,
+      {
+        marginTop: 0,
+        paddingBottom: 0,
+        duration: 0.1,
+        ease: 'power1.inOut',
+      },
+      0.5
+    );
+    tl.eventCallback('onComplete', () => {
+      openedRecordId.value = null;
+    });
+  } else {
+    openedRecordId.value = recordId;
+    await nextTick();
+
+    const panel = documentPanels[recordId];
+
+    if (!panel) {
+      return;
+    }
+
+    tl.set(panel, { overflow: 'auto' }).to(panel, {
+      height: 400,
+      opacity: 1,
+      duration: 0.6,
+      ease: 'power1.inOut',
+      overflow: 'auto',
+    });
+  }
+}
+
+function removeRecord(id: number) {
+  const row = rowContainers[id];
+  if (!row) {
+    return;
+  }
+
+  const tl = gsap.timeline();
+
+  tl.to(row, {
+    x: '-100%',
+    duration: 0.6,
+    opacity: 0,
+    ease: 'power1.inOut',
+  });
+
+  tl.to(
+    row,
+    {
+      duration: 0.2,
+      height: 0,
+      marginBottom: 0,
+      ease: 'power1.inOut',
+    },
+    0.4
+  );
+
+  tl.eventCallback('onComplete', () => {
+    appStore.removeRecord(id);
+    rowContainers[id] = null;
+  });
+}
 </script>
 
 <template>
@@ -36,9 +123,19 @@ const appStore = useAppStore();
             class="staff-records__row-container"
             v-for="(record, index) in appStore.records"
             :key="record.id"
+            :ref="(el) => (rowContainers[record.id] = el)"
           >
-            <RecordRow :record="record" />
-            <RecordDocuments v-if="index === 2" :record="record" />
+            <RecordRow
+              :record="record"
+              @toggle-documents-panel="toggleDocuments"
+              @remove-record="removeRecord"
+            />
+            <RecordDocuments
+              :ref="(el) => (documentPanels[record.id] = el ? el.htmlElement : null)"
+              :record="record"
+              v-if="openedRecordId === record.id"
+              class="staff-records__row-documents"
+            />
           </div>
         </div>
       </section>

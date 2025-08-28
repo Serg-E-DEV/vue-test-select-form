@@ -13,12 +13,12 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: var(--color-bg-grey);
+    background-color: var(--color-border-light);
     border-radius: 4px;
   }
 
   :-moz-any(&) {
     scrollbar-width: thin;
-    scrollbar-color: var(--color-bg-grey);
+    scrollbar-color: var(--color-border-light);
   }
 }

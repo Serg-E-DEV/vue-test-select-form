@@ -7,13 +7,17 @@ import { StaffRecord } from '@/interfaces/staff-record.interface';
 import { RecordForm } from '@/interfaces/forms.interface';
 
 import { RecordFormErrors } from '@/interfaces/errors.interface';
-import { reactive, ref } from 'vue';
-import gsap from 'gsap';
+import { computed, reactive, ref } from 'vue';
 import { useAppStore } from '@/stores/app.store';
 import { validateRecordForm } from '@/modules/validateForms';
 
 const props = defineProps<{
   record: StaffRecord;
+}>();
+
+const emit = defineEmits<{
+  (e: 'toggle-documents-panel', recordId: number);
+  (e: 'remove-record', id: number);
 }>();
 
 const appStore = useAppStore();
@@ -32,21 +36,9 @@ const recordFormErrors = reactive<RecordFormErrors>({
   fullName: false,
 });
 
-function removeRecord() {
-  if (!recordRow.value) {
-    return;
-  }
-
-  gsap.to(recordRow.value, {
-    duration: 0.6,
-    x: '-100%',
-    opacity: 0,
-    ease: 'power1.inOut',
-    onComplete: () => {
-      appStore.removeRecord(props.record.id);
-    },
-  });
-}
+const validDocumentsCount = computed(() => {
+  return props.record.staffDocuments.filter((document) => document.validated).length;
+});
 
 function validateRecord() {
   validateRecordForm(recordForm, recordFormErrors);
@@ -66,6 +58,10 @@ function updateRecordIfValid() {
   });
 
   isEditing.value = false;
+}
+
+function toggleDocumentsPanel() {
+  emit('toggle-documents-panel', props.record.id);
 }
 </script>
 
@@ -104,14 +100,16 @@ function updateRecordIfValid() {
       @blur="validateRecord"
     />
     <ResetButton
-      :class="['record-row__btn-docs', { 'record-row__btn-docs_empty': !props.record.staffDocuments.length }]"
+      :class="['record-row__btn-docs', { 'record-row__btn-docs_empty': !validDocumentsCount }]"
+      v-if="!isEditing"
+      @click="toggleDocumentsPanel"
     >
-      Документы: {{ record.staffDocuments.length }}
+      {{ validDocumentsCount > 0 ? `Документы: ${validDocumentsCount}` : 'Добавить документ' }}
     </ResetButton>
     <div class="record-row__controls">
       <IconButton icon="edit" v-if="!isEditing" @click="isEditing = true" />
       <IconButton icon="save" v-if="isEditing" @click="updateRecordIfValid" />
-      <IconButton icon="trash" @click="removeRecord" />
+      <IconButton icon="trash" @click="emit('remove-record', record.id)" />
     </div>
   </div>
 </template>

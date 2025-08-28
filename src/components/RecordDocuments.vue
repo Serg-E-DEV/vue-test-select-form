@@ -21,6 +21,8 @@ const appStore = useAppStore();
 
 const isEditing = ref<boolean>(false);
 
+const htmlElement = ref<HTMLElement>();
+
 const documentComponents: Record<string, Component> = {
   seamanPassport: DefaultDocumentForm,
 };
@@ -33,12 +35,14 @@ const selectedDocument = computed<StaffDocument | undefined>(() =>
 
 const selectOptions = computed<SelectOption[]>(() =>
   staffDocumentsSelectOptions.map((option) => {
-    const isAdded = props.record.staffDocuments.some((document) => document.type === option.value);
+    const isValid = props.record.staffDocuments.some(
+      (document) => document.type === option.value && document.validated
+    );
 
     return {
       selectValue: option.value,
-      selectLabel: isAdded ? `${option.label}` : `${option.label} - добавить`,
-      active: isAdded,
+      selectLabel: isValid ? `${option.label} ✓` : `${option.label}`,
+      active: isValid,
     };
   })
 );
@@ -52,6 +56,7 @@ const documentFormErrors = reactive<DocumentFormErrors>({});
 
 function removeDocument() {
   appStore.removeDocument(props.record.id, selectedDocumentType.value);
+  isEditing.value = false;
 }
 
 function validateDocument() {
@@ -92,12 +97,19 @@ watch(
   },
   { immediate: true }
 );
+
+defineExpose({ htmlElement });
 </script>
 
 <template>
-  <div class="record-documents">
+  <div class="record-documents scrollbar-style" ref="htmlElement">
     <div class="record-documents__select-panel">
-      <BaseSelect :select-options="selectOptions" v-model="selectedDocumentType" />
+      <BaseSelect
+        class="record-documents__select"
+        :select-options="selectOptions"
+        v-model="selectedDocumentType"
+        :disabled="isEditing === true"
+      />
       <div class="record-documents__select-controls">
         <IconButton
           icon="add"

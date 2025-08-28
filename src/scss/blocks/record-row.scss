@@ -20,6 +20,7 @@
   &_header {
     --record-row-border: none;
 
+    margin-bottom: 8px;
     font: var(--font-body-s);
     color: var(--color-text-light);
   }
@@ -50,7 +51,7 @@
   &__btn-docs {
     font: var(--font-body-xs);
     text-decoration: underline dashed;
-    color: var(--color-blue);
+    color: var(--color-green-dark);
 
     &_empty {
       color: var(--color-text-light);
