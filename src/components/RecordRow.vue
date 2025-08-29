@@ -10,9 +10,11 @@ import { RecordFormErrors } from '@/interfaces/errors.interface';
 import { computed, reactive, ref } from 'vue';
 import { useAppStore } from '@/stores/app.store';
 import { validateRecordForm } from '@/modules/validateForms';
+import SpriteIcon from '@/components/base/SpriteIcon.vue';
 
 const props = defineProps<{
   record: StaffRecord;
+  isExpanded: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -102,9 +104,14 @@ function toggleDocumentsPanel() {
     <ResetButton
       :class="['record-row__btn-docs', { 'record-row__btn-docs_empty': !validDocumentsCount }]"
       v-if="!isEditing"
+      :aria-controls="`documents-panel-${record.id}`"
+      :aria-expanded="isExpanded"
       @click="toggleDocumentsPanel"
     >
-      {{ validDocumentsCount > 0 ? `Документы: ${validDocumentsCount}` : 'Добавить документ' }}
+      <SpriteIcon icon="caret-right" :width="12" :height="12" class="record-row__btn-docs-icon" />
+      {{
+        validDocumentsCount > 0 ? `Документы: ${validDocumentsCount}` : `Документы: ${validDocumentsCount}`
+      }}
     </ResetButton>
     <div class="record-row__controls">
       <IconButton icon="edit" v-if="!isEditing" @click="isEditing = true" />

@@ -1,11 +1,11 @@
 @use '@/scss/common/typography' as typography;
 
 .base-button {
-  @include typography.main-text(18px, 400);
+  @include typography.main-text(14px, 400);
 
   flex-shrink: 0;
-  min-height: 52px;
-  padding-inline: 24px;
+  min-height: 32px;
+  padding-inline: 16px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,7 +26,7 @@
   &_theme {
     &_primary {
       --base-button-color: var(--color-blank);
-      --base-button-background: var(--color-black);
+      --base-button-background: var(--color-grey-dark);
     }
 
     &_ghost {

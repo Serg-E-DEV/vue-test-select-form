@@ -32,4 +32,10 @@
     align-items: center;
     column-gap: 4px;
   }
+
+  &__buttons {
+    margin-top: auto;
+    display: flex;
+    column-gap: 8px;
+  }
 }

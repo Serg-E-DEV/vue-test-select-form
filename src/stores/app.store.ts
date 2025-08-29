@@ -117,6 +117,13 @@ export const useAppStore = defineStore('App', () => {
     );
   }
 
+  function clearInvalidDocuments() {
+    records.value = records.value.map((record: StaffRecord) => ({
+      ...record,
+      staffDocuments: record.staffDocuments.filter((document: StaffDocument) => document.validated),
+    }));
+  }
+
   watch(records, saveRecords, { deep: true });
 
   loadRecords();
@@ -129,5 +136,6 @@ export const useAppStore = defineStore('App', () => {
     removeDocument,
     addDocument,
     updateDocument,
+    clearInvalidDocuments,
   };
 });

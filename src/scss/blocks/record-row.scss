@@ -49,12 +49,22 @@
   }
 
   &__btn-docs {
+    min-width: 110px;
+    display: flex;
+    align-items: center;
+    column-gap: 4px;
     font: var(--font-body-xs);
     text-decoration: underline dashed;
     color: var(--color-green-dark);
 
     &_empty {
       color: var(--color-text-light);
+    }
+  }
+
+  &__btn-docs-icon {
+    [aria-expanded='true'] & {
+      transform: rotate(90deg);
     }
   }
 

@@ -21,6 +21,7 @@ async function toggleDocuments(recordId: number) {
   const tl = gsap.timeline();
 
   if (isOpened) {
+    // close
     panel = documentPanels[recordId];
 
     if (!panel) {
@@ -43,7 +44,11 @@ async function toggleDocuments(recordId: number) {
       openedRecordId.value = null;
     });
   } else {
+    // open
     openedRecordId.value = recordId;
+
+    appStore.clearInvalidDocuments();
+
     await nextTick();
 
     const panel = documentPanels[recordId];
@@ -101,7 +106,12 @@ function removeRecord(id: number) {
       <section class="staff-records">
         <div class="staff-records__header">
           <h1 class="staff-records__title">Учетные карточки сотрудников</h1>
-          <BaseButton theme="ghost" shape="square" @click="appStore.createRecord()">
+          <BaseButton
+            class="staff-records__btn-add"
+            theme="ghost"
+            shape="square"
+            @click="appStore.createRecord()"
+          >
             <SpriteIcon icon="add" />
           </BaseButton>
         </div>
@@ -127,6 +137,7 @@ function removeRecord(id: number) {
           >
             <RecordRow
               :record="record"
+              :is-expanded="openedRecordId === record.id"
               @toggle-documents-panel="toggleDocuments"
               @remove-record="removeRecord"
             />
@@ -135,6 +146,7 @@ function removeRecord(id: number) {
               :record="record"
               v-if="openedRecordId === record.id"
               class="staff-records__row-documents"
+              @toggle-documents-panel="toggleDocuments"
             />
           </div>
         </div>

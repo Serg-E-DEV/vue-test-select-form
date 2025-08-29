@@ -13,9 +13,14 @@ import { computed, reactive, ref, watch } from 'vue';
 import type { Component } from 'vue';
 import { documentsSchema, staffDocumentsSelectOptions } from '@/schemas/documents.schema';
 import { useAppStore } from '@/stores/app.store';
-import { validateDocumentForm } from '@/modules/validateForms';
+import { clearDocumentFormErrors, validateDocumentForm } from '@/modules/validateForms';
+import BaseButton from '@/components/base/BaseButton.vue';
 
 const props = defineProps<{ record: StaffRecord }>();
+
+const emit = defineEmits<{
+  (e: 'toggle-documents-panel', recordId: number);
+}>();
 
 const appStore = useAppStore();
 
@@ -55,6 +60,7 @@ const documentForm = ref<DocumentForm>([]);
 const documentFormErrors = reactive<DocumentFormErrors>({});
 
 function removeDocument() {
+  clearDocumentFormErrors(documentFormErrors);
   appStore.removeDocument(props.record.id, selectedDocumentType.value);
   isEditing.value = false;
 }
@@ -102,7 +108,13 @@ defineExpose({ htmlElement });
 </script>
 
 <template>
-  <div class="record-documents scrollbar-style" ref="htmlElement">
+  <div
+    class="record-documents scrollbar-style"
+    ref="htmlElement"
+    role="region"
+    :id="`documents-panel-${record.id}`"
+    :aria-labelledby="`documents-panel-toggler-${record.id}`"
+  >
     <div class="record-documents__select-panel">
       <BaseSelect
         class="record-documents__select"
@@ -136,6 +148,12 @@ defineExpose({ htmlElement });
         @validate-document="validateDocument"
         @clear-validation="(fieldKey: string) => (documentFormErrors[fieldKey] = false)"
       />
+    </div>
+    <div class="record-documents__buttons">
+      <BaseButton theme="primary" v-if="isSelectedDocumentAdded && isEditing" @click="updateDocumentIfValid">
+        Сохранить
+      </BaseButton>
+      <BaseButton theme="ghost" @click="emit('toggle-documents-panel', record.id)">Закрыть</BaseButton>
     </div>
   </div>
 </template>

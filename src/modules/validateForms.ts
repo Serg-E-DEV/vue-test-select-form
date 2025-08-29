@@ -23,3 +23,9 @@ export function validateDocumentForm(form: DocumentForm, errors: DocumentFormErr
 
   return !Object.values(errors).some(Boolean);
 }
+
+export function clearDocumentFormErrors(errors: DocumentFormErrors) {
+  Object.keys(errors).forEach((key) => {
+    errors[key] = false;
+  });
+}
