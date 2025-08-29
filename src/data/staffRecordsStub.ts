@@ -26,14 +26,14 @@ export const staffRecordsStub: StaffRecord[] = [
   {
     id: 2,
     staffNumber: '22-009',
-    fullName: 'Петрова Мария Дмитриевна',
+    fullName: 'Петрова Мария Петровна',
     validated: true,
     staffDocuments: [],
   },
   {
     id: 3,
     staffNumber: '22-008',
-    fullName: 'Сидоров Алексей Николаевич',
+    fullName: 'Сидоров Алексей Алексеевич',
     validated: true,
     staffDocuments: [
       {
@@ -42,7 +42,7 @@ export const staffRecordsStub: StaffRecord[] = [
         fields: {
           series: '4321',
           number: '098765',
-          fullName: 'Сидоров Алексей Николаевич',
+          fullName: 'Сидоров Алексей Алексеевич',
           dateOfBirth: '1988-07-14',
           birthPlace: 'Санкт-Петербург',
           issuedBy: 'ОВД Санкт-Петербург',
@@ -56,7 +56,7 @@ export const staffRecordsStub: StaffRecord[] = [
         fields: {
           series: 'МР123',
           number: '000987',
-          fullName: 'Сидоров Алексей Николаевич',
+          fullName: 'Сидоров Алексей Алексеевич',
           dateOfBirth: '1988-07-14',
           birthPlace: 'Санкт-Петербург',
           nationality: 'Россия',
@@ -93,7 +93,7 @@ export const staffRecordsStub: StaffRecord[] = [
         id: 6,
         type: 'inn',
         fields: {
-          number: '770123456789',
+          number: '770128886789',
           issueDate: '2008-03-15',
         },
         validated: true,
@@ -102,7 +102,7 @@ export const staffRecordsStub: StaffRecord[] = [
         id: 7,
         type: 'medicalBook',
         fields: {
-          number: 'МБ-123456',
+          number: 'МБ-128756',
           issueDate: '2015-01-10',
           expiryDate: '2025-01-10',
           medicalInstitution: 'ГБУЗ «Поликлиника №1»',
@@ -146,7 +146,7 @@ export const staffRecordsStub: StaffRecord[] = [
   {
     id: 4,
     staffNumber: '23-004',
-    fullName: 'Дмитриев Вячеслав Олегович',
+    fullName: 'Дмитриев Дмитрий Дмитриевич',
     validated: true,
     staffDocuments: [],
   },

@@ -20,6 +20,12 @@
   }
 
   &_theme {
+    &_default {
+      input[type='date'] {
+        width: max-content;
+      }
+    }
+
     &_passport {
       display: grid;
       column-gap: 32px;

@@ -57,6 +57,10 @@
     text-decoration: underline dashed;
     color: var(--color-green-dark);
 
+    &:disabled {
+      opacity: 0.3;
+    }
+
     &_empty {
       color: var(--color-text-light);
     }

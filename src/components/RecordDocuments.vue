@@ -34,6 +34,7 @@ const isEditing = ref<boolean>(false);
 
 const rootHtmlElement = ref<HTMLElement>();
 const formComponent = ref<formComponent>();
+const formComponentKey = ref(0);
 
 const documentComponents: Record<string, Component> = {
   passport: PassportDocumentForm,
@@ -67,6 +68,20 @@ const isSelectedDocumentAdded = computed<boolean>(() =>
 const documentForm = ref<DocumentForm>([]);
 const documentFormErrors = reactive<DocumentFormErrors>({});
 
+function resetDocumentForm(document: StaffDocument) {
+  if (!document) {
+    documentForm.value = [];
+    return;
+  }
+
+  documentForm.value = Object.entries(document.fields).map(([key, value]) => ({
+    key,
+    label: documentsSchema[document.type].fields[key].label,
+    type: documentsSchema[document.type].fields[key].type,
+    value,
+  }));
+}
+
 function removeDocument() {
   clearDocumentFormErrors(documentFormErrors);
   appStore.removeDocument(props.record.id, selectedDocumentType.value);
@@ -95,16 +110,21 @@ function updateDocumentIfValid() {
   isEditing.value = false;
 }
 
+function cancelDocumentEditing() {
+  if (!selectedDocument.value) return;
+
+  resetDocumentForm(selectedDocument.value);
+
+  isEditing.value = false;
+
+  clearDocumentFormErrors(documentFormErrors);
+}
+
 watch(
   selectedDocument,
   (newValue) => {
     if (newValue) {
-      documentForm.value = Object.entries(newValue.fields).map(([key, value]) => ({
-        key,
-        label: documentsSchema[newValue.type].fields[key].label,
-        type: documentsSchema[newValue.type].fields[key].type,
-        value,
-      }));
+      resetDocumentForm(newValue);
     } else {
       documentForm.value = [];
     }
@@ -165,6 +185,7 @@ defineExpose({ rootHtmlElement });
       <component
         v-if="selectedDocument"
         :is="documentComponents[selectedDocument?.type] || DefaultDocumentForm"
+        :key="formComponentKey"
         v-model:fields="documentForm"
         :errors="documentFormErrors"
         :isEditing
@@ -178,16 +199,14 @@ defineExpose({ rootHtmlElement });
       <BaseButton theme="primary" v-if="isSelectedDocumentAdded && isEditing" @click="updateDocumentIfValid">
         Сохранить
       </BaseButton>
-      <BaseButton theme="ghost" v-if="!isEditing" @click="emit('toggle-documents-panel', record.id)"
-        >Закрыть</BaseButton
-      >
       <BaseButton
         theme="ghost"
-        v-if="isSelectedDocumentAdded && isEditing"
-        @click="emit('toggle-documents-panel', record.id)"
+        v-if="isSelectedDocumentAdded && selectedDocument?.validated && isEditing"
+        @click="cancelDocumentEditing"
       >
         Отменить
       </BaseButton>
+      <BaseButton theme="ghost" @click="emit('toggle-documents-panel', record.id)"> Закрыть </BaseButton>
     </div>
   </div>
 </template>

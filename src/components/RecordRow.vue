@@ -103,7 +103,7 @@ function toggleDocumentsPanel() {
     />
     <ResetButton
       :class="['record-row__btn-docs', { 'record-row__btn-docs_empty': !validDocumentsCount }]"
-      v-if="!isEditing"
+      :disabled="isEditing && !record.validated"
       :aria-controls="`documents-panel-${record.id}`"
       :aria-expanded="isExpanded"
       @click="toggleDocumentsPanel"
