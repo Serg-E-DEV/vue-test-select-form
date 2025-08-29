@@ -10,7 +10,10 @@ export const documentsSchema: Record<string, StaffDocumentSchema> = {
     fields: {
       series: { type: 'string', label: 'Серия' },
       number: { type: 'string', label: 'Номер' },
+      fullName: { type: 'string', label: 'ФИО' },
+      dateOfBirth: { type: 'date', label: 'Дата рождения' },
       category: { type: 'string', label: 'Категория' },
+      issuedBy: { type: 'string', label: 'Кем выдано' },
       issueDate: { type: 'date', label: 'Дата выдачи' },
       expiryDate: { type: 'date', label: 'Срок действия' },
     },
@@ -22,6 +25,8 @@ export const documentsSchema: Record<string, StaffDocumentSchema> = {
       startDate: { type: 'date', label: 'Дата начала' },
       endDate: { type: 'date', label: 'Дата окончания' },
       employer: { type: 'string', label: 'Работодатель' },
+      employeeFullName: { type: 'string', label: 'ФИО работника' },
+      position: { type: 'string', label: 'Должность' },
     },
   },
   inn: {
@@ -29,12 +34,15 @@ export const documentsSchema: Record<string, StaffDocumentSchema> = {
     fields: {
       number: { type: 'string', label: 'Номер' },
       issueDate: { type: 'date', label: 'Дата выдачи' },
+      fullName: { type: 'string', label: 'ФИО владельца' },
     },
   },
   medicalBook: {
     label: 'Медицинская книжка',
     fields: {
       number: { type: 'string', label: 'Номер' },
+      fullName: { type: 'string', label: 'ФИО' },
+      dateOfBirth: { type: 'date', label: 'Дата рождения' },
       issueDate: { type: 'date', label: 'Дата выдачи' },
       expiryDate: { type: 'date', label: 'Срок действия' },
       medicalInstitution: { type: 'string', label: 'Медучреждение' },
@@ -45,6 +53,9 @@ export const documentsSchema: Record<string, StaffDocumentSchema> = {
     fields: {
       series: { type: 'string', label: 'Серия' },
       number: { type: 'string', label: 'Номер' },
+      fullName: { type: 'string', label: 'ФИО' },
+      dateOfBirth: { type: 'date', label: 'Дата рождения' },
+      birthPlace: { type: 'string', label: 'Место рождения' },
       issuedBy: { type: 'string', label: 'Кем выдан' },
       issueDate: { type: 'date', label: 'Дата выдачи' },
       militaryRank: { type: 'string', label: 'Воинское звание' },
@@ -54,6 +65,8 @@ export const documentsSchema: Record<string, StaffDocumentSchema> = {
     label: 'Полис ОМС',
     fields: {
       number: { type: 'string', label: 'Номер' },
+      fullName: { type: 'string', label: 'ФИО' },
+      dateOfBirth: { type: 'date', label: 'Дата рождения' },
       issueDate: { type: 'date', label: 'Дата выдачи' },
       expiryDate: { type: 'date', label: 'Срок действия' },
       insuranceCompany: { type: 'string', label: 'Страховая компания' },
@@ -64,9 +77,11 @@ export const documentsSchema: Record<string, StaffDocumentSchema> = {
     fields: {
       series: { type: 'string', label: 'Серия' },
       number: { type: 'string', label: 'Номер' },
+      fullName: { type: 'string', label: 'ФИО' },
+      dateOfBirth: { type: 'date', label: 'Дата рождения' },
+      birthPlace: { type: 'string', label: 'Место рождения' },
       issuedBy: { type: 'string', label: 'Кем выдан' },
       issueDate: { type: 'date', label: 'Дата выдачи' },
-      birthPlace: { type: 'string', label: 'Место рождения' },
     },
   },
   seamanPassport: {
@@ -74,16 +89,21 @@ export const documentsSchema: Record<string, StaffDocumentSchema> = {
     fields: {
       series: { type: 'string', label: 'Серия' },
       number: { type: 'string', label: 'Номер' },
+      fullName: { type: 'string', label: 'ФИО' },
+      dateOfBirth: { type: 'date', label: 'Дата рождения' },
+      birthPlace: { type: 'string', label: 'Место рождения' },
+      nationality: { type: 'string', label: 'Гражданство' },
       issuedBy: { type: 'string', label: 'Кем выдан' },
       issueDate: { type: 'date', label: 'Дата выдачи' },
       expiryDate: { type: 'date', label: 'Срок действия' },
-      birthPlace: { type: 'string', label: 'Место рождения' },
     },
   },
   snils: {
     label: 'СНИЛС',
     fields: {
       number: { type: 'string', label: 'Номер' },
+      fullName: { type: 'string', label: 'ФИО' },
+      dateOfBirth: { type: 'date', label: 'Дата рождения' },
       issueDate: { type: 'date', label: 'Дата выдачи' },
     },
   },

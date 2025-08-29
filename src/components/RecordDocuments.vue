@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import BaseSelect from '@/components/base/BaseSelect.vue';
 import IconButton from '@/components/base/IconButton.vue';
-import DefaultDocumentForm from '@/components/document-forms/DefaultDocumentForm.vue';
 import BaseButton from '@/components/base/BaseButton.vue';
+import DefaultDocumentForm from '@/components/document-forms/DefaultDocumentForm.vue';
+import PassportDocumentForm from '@/components/document-forms/PassportDocumentForm.vue';
 
 import { StaffDocument } from '@/interfaces/staff-document.interface';
 import { StaffRecord } from '@/interfaces/staff-record.interface';
 import { SelectOption } from '@/interfaces/select-option.interface';
-import { DocumentForm } from '@/interfaces/forms.interface';
 
+import { DocumentForm } from '@/interfaces/forms.interface';
 import { DocumentFormErrors } from '@/interfaces/errors.interface';
 import { computed, nextTick, reactive, ref, watch } from 'vue';
 import type { Component } from 'vue';
@@ -35,7 +36,8 @@ const rootHtmlElement = ref<HTMLElement>();
 const formComponent = ref<formComponent>();
 
 const documentComponents: Record<string, Component> = {
-  seamanPassport: DefaultDocumentForm,
+  passport: PassportDocumentForm,
+  seamanPassport: PassportDocumentForm,
 };
 
 const selectedDocumentType = ref<string>('');
@@ -162,9 +164,8 @@ defineExpose({ rootHtmlElement });
     <div class="record-documents__content">
       <component
         v-if="selectedDocument"
-        :is="documentComponents[selectedDocument] || DefaultDocumentForm"
+        :is="documentComponents[selectedDocument?.type] || DefaultDocumentForm"
         v-model:fields="documentForm"
-        :record="selectedDocument"
         :errors="documentFormErrors"
         :isEditing
         @update-document="updateDocumentIfValid"
@@ -177,7 +178,16 @@ defineExpose({ rootHtmlElement });
       <BaseButton theme="primary" v-if="isSelectedDocumentAdded && isEditing" @click="updateDocumentIfValid">
         Сохранить
       </BaseButton>
-      <BaseButton theme="ghost" @click="emit('toggle-documents-panel', record.id)">Закрыть</BaseButton>
+      <BaseButton theme="ghost" v-if="!isEditing" @click="emit('toggle-documents-panel', record.id)"
+        >Закрыть</BaseButton
+      >
+      <BaseButton
+        theme="ghost"
+        v-if="isSelectedDocumentAdded && isEditing"
+        @click="emit('toggle-documents-panel', record.id)"
+      >
+        Отменить
+      </BaseButton>
     </div>
   </div>
 </template>

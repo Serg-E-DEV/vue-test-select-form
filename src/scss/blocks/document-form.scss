@@ -18,4 +18,19 @@
       border-color: transparent;
     }
   }
+
+  &_theme {
+    &_passport {
+      display: grid;
+      column-gap: 32px;
+      grid-template-columns: 1fr 1fr;
+
+      .document-form {
+        &__label {
+          padding-left: 4px;
+          border-bottom: 3px solid var(--color-border-light);
+        }
+      }
+    }
+  }
 }
