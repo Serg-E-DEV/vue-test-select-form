@@ -42,6 +42,12 @@ const validDocumentsCount = computed(() => {
   return props.record.staffDocuments.filter((document) => document.validated).length;
 });
 
+const documentsButtonText = computed(() => {
+  return validDocumentsCount.value > 0
+    ? `Документы: ${validDocumentsCount.value}`
+    : `Документы: ${validDocumentsCount.value}`;
+});
+
 function validateRecord() {
   validateRecordForm(recordForm, recordFormErrors);
 }
@@ -109,9 +115,7 @@ function toggleDocumentsPanel() {
       @click="toggleDocumentsPanel"
     >
       <SpriteIcon icon="caret-right" :width="12" :height="12" class="record-row__btn-docs-icon" />
-      {{
-        validDocumentsCount > 0 ? `Документы: ${validDocumentsCount}` : `Документы: ${validDocumentsCount}`
-      }}
+      {{ documentsButtonText }}
     </ResetButton>
     <div class="record-row__controls">
       <IconButton icon="edit" v-if="!isEditing" @click="isEditing = true" />
