@@ -2,19 +2,24 @@
 import BaseSelect from '@/components/base/BaseSelect.vue';
 import IconButton from '@/components/base/IconButton.vue';
 import DefaultDocumentForm from '@/components/document-forms/DefaultDocumentForm.vue';
+import BaseButton from '@/components/base/BaseButton.vue';
 
 import { StaffDocument } from '@/interfaces/staff-document.interface';
 import { StaffRecord } from '@/interfaces/staff-record.interface';
 import { SelectOption } from '@/interfaces/select-option.interface';
 import { DocumentForm } from '@/interfaces/forms.interface';
-import { DocumentFormErrors } from '@/interfaces/errors.interface';
 
-import { computed, reactive, ref, watch } from 'vue';
+import { DocumentFormErrors } from '@/interfaces/errors.interface';
+import { computed, nextTick, reactive, ref, watch } from 'vue';
 import type { Component } from 'vue';
 import { documentsSchema, staffDocumentsSelectOptions } from '@/schemas/documents.schema';
 import { useAppStore } from '@/stores/app.store';
 import { clearDocumentFormErrors, validateDocumentForm } from '@/modules/validateForms';
-import BaseButton from '@/components/base/BaseButton.vue';
+import gsap from 'gsap';
+
+interface formComponent {
+  fieldHtmlElements: HTMLElement[];
+}
 
 const props = defineProps<{ record: StaffRecord }>();
 
@@ -26,7 +31,8 @@ const appStore = useAppStore();
 
 const isEditing = ref<boolean>(false);
 
-const htmlElement = ref<HTMLElement>();
+const rootHtmlElement = ref<HTMLElement>();
+const formComponent = ref<formComponent>();
 
 const documentComponents: Record<string, Component> = {
   seamanPassport: DefaultDocumentForm,
@@ -104,13 +110,30 @@ watch(
   { immediate: true }
 );
 
-defineExpose({ htmlElement });
+watch(isEditing, async (newVal, oldVal) => {
+  if (newVal && !oldVal && isSelectedDocumentAdded.value && !selectedDocument.value?.validated) {
+    await nextTick();
+    const fields = formComponent.value?.fieldHtmlElements;
+    if (fields && fields.length > 0) {
+      gsap.from(fields, {
+        opacity: 0,
+        y: -12,
+        duration: 0.2,
+        stagger: 0.1,
+        ease: 'power1.out',
+      });
+    }
+  }
+});
+
+defineExpose({ rootHtmlElement });
 </script>
 
 <template>
   <div
     class="record-documents scrollbar-style"
-    ref="htmlElement"
+    :class="{ 'record-documents_active': record.staffDocuments.length }"
+    ref="rootHtmlElement"
     role="region"
     :id="`documents-panel-${record.id}`"
     :aria-labelledby="`documents-panel-toggler-${record.id}`"
@@ -147,6 +170,7 @@ defineExpose({ htmlElement });
         @update-document="updateDocumentIfValid"
         @validate-document="validateDocument"
         @clear-validation="(fieldKey: string) => (documentFormErrors[fieldKey] = false)"
+        ref="formComponent"
       />
     </div>
     <div class="record-documents__buttons">

@@ -2,6 +2,7 @@
 import BaseInput from '@/components/base/BaseInput.vue';
 import { StaffDocumentFormField } from '@/interfaces/staff-document.interface';
 import { DocumentFormErrors } from '@/interfaces/errors.interface';
+import { ref } from 'vue';
 
 defineProps<{
   isEditing: boolean;
@@ -15,11 +16,20 @@ const emit = defineEmits<{
   (e: 'validate-document'): void;
   (e: 'clear-validation', fieldKey: string): void;
 }>();
+
+const fieldHtmlElements = ref<HTMLElement[]>([]);
+
+defineExpose({ fieldHtmlElements });
 </script>
 
 <template>
   <div class="document-form document-form_theme_default">
-    <div v-for="(field, index) in fields" :key="field.key" class="document-form__field">
+    <div
+      v-for="(field, index) in fields"
+      :key="field.key"
+      class="document-form__field"
+      :ref="(el) => el && (fieldHtmlElements[index] = el)"
+    >
       <label class="document-form__label">{{ field.label }}</label>
       <BaseInput
         class="document-form__input"

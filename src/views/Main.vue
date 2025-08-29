@@ -34,7 +34,7 @@ async function toggleDocuments(recordId: number) {
       panel,
       {
         marginTop: 0,
-        paddingBottom: 0,
+        borderWidth: 0,
         duration: 0.1,
         ease: 'power1.inOut',
       },
@@ -57,13 +57,23 @@ async function toggleDocuments(recordId: number) {
       return;
     }
 
-    tl.set(panel, { overflow: 'auto' }).to(panel, {
-      height: 400,
+    tl.set(panel, { overflow: 'hidden' });
+    tl.to(panel, {
+      marginTop: 8,
+      height: 'auto',
       opacity: 1,
       duration: 0.6,
       ease: 'power1.inOut',
-      overflow: 'auto',
     });
+    tl.to(
+      panel,
+      {
+        opacity: 1,
+        duration: 0.1,
+        ease: 'power1.inOut',
+      },
+      0.5
+    );
   }
 }
 
@@ -142,7 +152,7 @@ function removeRecord(id: number) {
               @remove-record="removeRecord"
             />
             <RecordDocuments
-              :ref="(el) => (documentPanels[record.id] = el ? el.htmlElement : null)"
+              :ref="(el) => (documentPanels[record.id] = el ? el.rootHtmlElement : null)"
               :record="record"
               v-if="openedRecordId === record.id"
               class="staff-records__row-documents"

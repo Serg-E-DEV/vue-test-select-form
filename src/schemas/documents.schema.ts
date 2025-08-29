@@ -5,15 +5,6 @@ import {
 } from '@/interfaces/staff-document.interface';
 
 export const documentsSchema: Record<string, StaffDocumentSchema> = {
-  digitalSignature: {
-    label: 'Электронная подпись',
-    fields: {
-      number: { type: 'string', label: 'Номер сертификата' },
-      issueDate: { type: 'date', label: 'Дата выдачи' },
-      expiryDate: { type: 'date', label: 'Срок действия' },
-      provider: { type: 'string', label: 'Удостоверяющий центр' },
-    },
-  },
   driverLicense: {
     label: 'Водительское удостоверение',
     fields: {
@@ -94,24 +85,6 @@ export const documentsSchema: Record<string, StaffDocumentSchema> = {
     fields: {
       number: { type: 'string', label: 'Номер' },
       issueDate: { type: 'date', label: 'Дата выдачи' },
-    },
-  },
-  testHeight: {
-    label: '_ТЕСТ ДЛЯ ПРОВЕРКИ ВЫСОТЫ',
-    fields: {
-      number: { type: 'string', label: 'Номер' },
-      number1: { type: 'string', label: 'Номер' },
-      number2: { type: 'string', label: 'Номер' },
-      number3: { type: 'string', label: 'Номер' },
-      number4: { type: 'string', label: 'Номер' },
-      number5: { type: 'string', label: 'Номер' },
-      number6: { type: 'string', label: 'Номер' },
-      number7: { type: 'string', label: 'Номер' },
-      number8: { type: 'string', label: 'Номер' },
-      number9: { type: 'string', label: 'Номер' },
-      number10: { type: 'string', label: 'Номер' },
-      number11: { type: 'string', label: 'Номер' },
-      number12: { type: 'string', label: 'Номер' },
     },
   },
 };

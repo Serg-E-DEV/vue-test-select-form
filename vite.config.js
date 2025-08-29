@@ -5,7 +5,7 @@ import path from 'path';
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => ({
   plugins: [vue()],
-  base: mode === 'production' ? '/test-tasks/6-vue-select-products/' : '/',
+  base: mode === 'production' ? '/test-tasks/7-vue-select-form/' : '/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

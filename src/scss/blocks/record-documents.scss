@@ -1,16 +1,21 @@
 .record-documents {
   height: 0;
-  padding: 0 16px 12px;
+  padding-inline: 16px;
   display: flex;
   flex-direction: column;
-  row-gap: 24px;
   border: 1px solid var(--color-border-light);
   border-radius: var(--radius);
   opacity: 0;
+  border-left-width: 4px;
+
+  &_active {
+    border-left-color: var(--color-green);
+  }
 
   &__select-panel {
     position: sticky;
     top: 0;
+    z-index: 1;
     padding-block: 12px;
     display: flex;
     column-gap: 8px;
@@ -33,8 +38,13 @@
     column-gap: 4px;
   }
 
+  &__content {
+    padding-block: 16px 32px;
+  }
+
   &__buttons {
     margin-top: auto;
+    padding-bottom: 12px;
     display: flex;
     column-gap: 8px;
   }
