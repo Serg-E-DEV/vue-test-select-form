@@ -25,4 +25,8 @@
       --base-input-border: 2px solid var(--color-red);
     }
   }
+
+  &[type='date'] {
+    width: max-content;
+  }
 }

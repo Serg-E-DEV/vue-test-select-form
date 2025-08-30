@@ -4,6 +4,7 @@
   row-gap: 12px;
 
   &__field {
+    max-width: 600px;
     display: grid;
     align-items: center;
     column-gap: 8px;
@@ -20,21 +21,26 @@
   }
 
   &_theme {
-    &_default {
-      input[type='date'] {
-        width: max-content;
-      }
-    }
-
     &_passport {
       display: grid;
       column-gap: 32px;
       grid-template-columns: 1fr 1fr;
 
       .document-form {
+        &__field {
+          column-gap: 16px;
+          grid-template-columns: 120px auto;
+        }
+
         &__label {
+          padding-bottom: 2px;
           padding-left: 4px;
+          font-size: 14px;
           border-bottom: 3px solid var(--color-border-light);
+        }
+
+        &__input {
+          font-size: 14px;
         }
       }
     }

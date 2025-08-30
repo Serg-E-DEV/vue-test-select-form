@@ -1,9 +1,10 @@
 .record-row {
+  min-width: max-content;
   padding: 6px 8px 6px 16px;
   display: grid;
   align-items: center;
   column-gap: 16px;
-  grid-template-columns: 32px 160px 1fr auto auto;
+  grid-template-columns: 32px 160px minmax(270px, 1fr) auto auto;
   overflow: hidden;
   border: var(--record-row-border, 1px solid var(--color-border-light));
   border-radius: var(--radius);
